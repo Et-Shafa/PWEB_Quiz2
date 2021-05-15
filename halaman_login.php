@@ -1,7 +1,5 @@
 <?php
-	include 'db.php';
-	
-	
+	require 'db.php';	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,58 +26,26 @@
 
 	<?php
 		session_start();
-		if(isset($_SESSION['username'])){
+		if(isset($_COOKIE['username'])){
+			if($_COOKIE['username']==$getUsername){
+				$_SESSION['username']=$getUsername;
+			}
+		}
+		if(!isset($_SESSION['username'])){
+			if(isset($_POST['login'])){
+			$getUsername = $_POST["username"];
+			$getPass = $_POST["passw"];
+			check($getUsername, $getPass);
+			$conn->close();
+			}
+			
+		}else{
 			header('location:index.php');
 			exit;
-		}else{
-			if(isset($_POST['login'])){
-				$getUsername = $_POST["username"];
-				$getPass = $_POST["passw"];
-				check($getUsername, $getPass);
-				$conn->close();
-			}
+			
 
 		}
-			
-		
-		
-		
-		// $_SESSION = session_start();
-		// $nama_cookie = "cookieusername";
-		// if(isset($_POST["login"])){
-			// $getUsername = $_POST["username"];
-			// $getPass = $_POST["passw"];	
-		// 	setcookie($nama_cookie ,$getUsername, time() + (30*1),'/');
-		// 	setcookie('passw',$getPass, time() + (30*1),'/');
-		// }
-		// if(!isset($_COOKIE[$nama_cookie])){
-		// 	echo 'nama cookie is not set!';
-		// }else{
-		// 	echo 'nama cookie is set!';
-		// 	echo $_COOKIE[$nama_cookie];
-		// 	// echo 'Value is'. $_COOKIE[$COOKIE];
-		// }
-		
-		
-
-		// echo 'value'.$_COOKIE[$COOKIE];
-		// if (isset($_POST["login"])) {
-		// 	$getUsername = $_POST["username"];
-		// 	$getPass = $_POST["passw"];
-			// echo "Hallo".$getUsername.$getPass;
-
-			// echo "<pre>".print_r($_POST, true)."</pre>";
-			// die();	
-		// }
-
-		?>
-
-	<?php
-		
-		
-		
 	?>
-
 
 </body>
 </html>

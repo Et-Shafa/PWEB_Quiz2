@@ -12,15 +12,12 @@ function check($usnama, $passw){
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
         if($usnama==$row['username']){
-
             if ($passw == $row['password']){
                 session_start();
-                $_SESSION['username'] = $usnama;
-                // $_SESSION['password'] = $passw;
+                $_SESSION['username'] = $row['username'];
+                setcookie('username', $row['username'], time()+(60*15));
                 header('location:index.php');
-                exit;
-                // echo "<script>alert('Selamat datang')</script>";
-                
+                exit;                
             }
             else{
                 echo "<script>alert('Mohon cek kembali username atau password yang anda inputkan')</script>";
