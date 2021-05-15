@@ -11,21 +11,30 @@ function check($usnama, $passw){
     $sql = "SELECT id, username, password FROM login";
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
-        // echo "<pre>";print_r($row);
         if($usnama==$row['username']){
-            // echo $row[$usnama];
 
             if ($passw == $row['password']){
-                echo "<script>alert('Selamat datang')</script>";
+                session_start();
+                $_SESSION['username'] = $usnama;
+                // $_SESSION['password'] = $passw;
+                header('location:index.php');
+                exit;
+                // echo "<script>alert('Selamat datang')</script>";
+                
             }
             else{
                 echo "<script>alert('Mohon cek kembali username atau password yang anda inputkan')</script>";
             }
             break;
 
-        }elseif($usnama == "" || $passw == ""|| $usnama!=$row['username'] && $row['id']==2){
-            echo "<script>alert('Mohon cek kembali username atau password yang anda inputkan')</script>";
-
+        }elseif($usnama == "" || $passw == ""|| $usnama!=$row['username']){ 
+            if($row['id']==2){//index row sebanyak ...
+                // perulangan. jika data username dan password pada database bertambah, maka index row pada parameter elif terakhir disesuaikan
+                echo "<script>alert('Mohon cek kembali username atau password yang anda inputkan')</script>";
+            }else{
+                continue;
+            }
+            
         }
         else{
             continue;
